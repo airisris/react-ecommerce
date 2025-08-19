@@ -57,7 +57,6 @@ export default function Products() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            px: 2,
             py: 3,
           }}
         >
