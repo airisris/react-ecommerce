@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -11,11 +10,9 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Chip from "@mui/material/Chip";
-import Divider from "@mui/material/Divider";
-import { Link } from "react-router";
-import { getProducts } from "../utils/api";
+import Header from "../components/Header";
+import { getProducts } from "../utils/api_products";
 import { useState, useEffect } from "react";
 
 export default function Products() {
@@ -34,24 +31,8 @@ export default function Products() {
 
   return (
     <>
-      {/* header */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          px: 2,
-          py: 3,
-        }}
-      >
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Welcome to My Store
-        </Typography>
-      </Box>
-
-      {/* Movies table */}
+      <Header/>
       <Container>
-        <Divider />
         <Box
           sx={{
             display: "flex",
