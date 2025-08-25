@@ -66,33 +66,39 @@ export default function Products() {
 
   const handleProductAdd = async (id) => {
     const product = await getProduct(id);
+    // get current cart data from local storage
     const cart = localStorage.getItem("cart")
       ? JSON.parse(localStorage.getItem("cart"))
       : [];
-    if (cart.length === 0) {
-      cart.push({ ...product, quantity: 1 });
+    // if (cart.length === 0) {
+    //   cart.push({ ...product, quantity: 1 });
+    // } else {
+    // find out if the product already exists in the cart or not
+    const selected = cart.find((c) => c._id === id);
+    if (selected) {
+      // if product already exists, increase quantity
+      // cart.map((c) => {
+      //   if (c._id === id) {
+      //     c.quantity += 1;
+      //   } else {
+      //     return c;
+      //   }
+      // });
+      selected.quantity += 1;
     } else {
-      const selected = cart.find((c) => c._id === id);
-      if (selected) {
-        cart.map((c) => {
-          if (c._id === id) {
-            c.quantity += 1;
-          } else {
-            return c;
-          }
-        });
-      } else {
-        cart.push({ ...product, quantity: 1 });
-      }
+      // if not exists, add to cart
+      cart.push({ ...product, quantity: 1 });
     }
+    // }
+    // update the cart (in local storage) with the latest data
     localStorage.setItem("cart", JSON.stringify(cart));
-    toast.success("Product added to cart");
+    toast.success(`"${product.name}" has been added to cart`);
     navigate("/cart");
   };
 
   return (
     <>
-      <Header />
+      <Header current="home" />
       <Container>
         <Box
           sx={{
@@ -176,8 +182,6 @@ export default function Products() {
                       onClick={() => {
                         handleProductAdd(product._id);
                       }}
-                      // component={Link}
-                      // to={"/cart"}
                     >
                       Add To Cart
                     </Button>

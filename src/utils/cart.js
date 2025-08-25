@@ -1,5 +1,5 @@
 // add product to cart
-export function AddToCart(product) {
+export function addToCart(product) {
 
 }
 

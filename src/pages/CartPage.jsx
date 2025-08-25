@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import { toast } from "sonner";
 
 const CartPage = () => {
+  // load the cart items from the local storage
   const productsInLocalStorage = localStorage.getItem("cart");
 
   const [cart, setCart] = useState(
@@ -38,7 +39,9 @@ const CartPage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
+        // remove product from cart
         const updatedCart = cart.filter((c) => c._id !== id);
+        // update the cart data in local storage and the state
         setCart(updatedCart);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
         toast.success("Product has been removed");
@@ -48,36 +51,8 @@ const CartPage = () => {
 
   return (
     <>
-      <Header />
+      <Header current="cart" title="Cart" />
       <Container>
-        <Typography
-          variant="h4"
-          sx={{ fontWeight: "bold", my: 2, textAlign: "center" }}
-        >
-          Cart
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 3,
-            pb: 3,
-            borderBottom: "1px solid #ddd",
-          }}
-        >
-          <Button component={Link} to="/" variant="outlined" color="primary">
-            Home
-          </Button>
-          <Button
-            component={Link}
-            to="/cart"
-            variant="contained"
-            color="primary"
-          >
-            Cart
-          </Button>
-        </Box>
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -103,12 +78,8 @@ const CartPage = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    No Product Add Yet!
+                    No Product Added Yet!
                   </TableCell>
-                  <TableCell align="right"></TableCell>
-                  <TableCell align="right"></TableCell>
-                  <TableCell align="right"></TableCell>
-                  <TableCell align="right"></TableCell>
                 </TableRow>
               ) : (
                 cart.map((c) => (
@@ -122,7 +93,7 @@ const CartPage = () => {
                     <TableCell align="right">$ {c.price}</TableCell>
                     <TableCell align="right">{c.quantity}</TableCell>
                     <TableCell align="right">
-                      $ {c.price * c.quantity}
+                      $ {(c.price * c.quantity).toFixed(2)}
                     </TableCell>
                     <TableCell align="right">
                       <Button
@@ -141,9 +112,7 @@ const CartPage = () => {
               <TableRow
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row"></TableCell>
-                <TableCell align="right"></TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell colSpan={3}></TableCell>
                 <TableCell align="right" sx={{ fontWeight: "bold" }}>
                   $ {total}
                 </TableCell>

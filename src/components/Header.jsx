@@ -1,7 +1,10 @@
+import { Link } from "react-router";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
-const Header = () => {
+const Header = (props) => {
+  const { current, title = "Welcome to My Store" } = props;
   return (
     <>
       <Box
@@ -13,8 +16,34 @@ const Header = () => {
         }}
       >
         <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Welcome to My Store
+          {title}
         </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "10px",
+            mt: 2,
+          }}
+        >
+          <Button
+            component={Link}
+            to="/"
+            color="primary"
+            variant={current === "home" ? "contained" : "outlined"}
+          >
+            Home
+          </Button>
+          <Button
+            component={Link}
+            to="/cart"
+            color="primary"
+            variant={current === "cart" ? "contained" : "outlined"}
+          >
+            Cart
+          </Button>
+        </Box>
       </Box>
     </>
   );
